@@ -15,9 +15,9 @@ import org.springframework.security.web.SecurityFilterChain;
 public class ProductWebSecurityConfig {
 
     @Bean
-    JwtAuthenticationConverter jwtAuthenticationConverter(){
+    JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("roles");
+        jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("scope"); /// name of claim in jwt token , check with token here refer - https://jwt.io
         jwtGrantedAuthoritiesConverter.setAuthorityPrefix("");
 
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
@@ -31,8 +31,6 @@ public class ProductWebSecurityConfig {
             auth.anyRequest().authenticated();
         }).oauth2ResourceServer(jwt -> jwt.jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(jwtAuthenticationConverter())));
         http.csrf(AbstractHttpConfigurer::disable);
-        // http.cors(AbstractHttpConfigurer::disable);
-        // http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.httpBasic(Customizer.withDefaults()).build();
     }
 }

@@ -13,7 +13,6 @@ public class ProductController {
 
     @GetMapping("/getProduct")
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     String getProduct() {
         return "Products";
     }
